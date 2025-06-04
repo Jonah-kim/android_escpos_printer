@@ -16,6 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -33,11 +34,18 @@ android {
 
     defaultConfig {
         minSdk = 21
+        externalNativeBuild {
+            ndkBuild {
+                cppFlags ''
+            }
+        }
     }
 
     dependencies {
         testImplementation("junit:junit:4.13.2")
         testImplementation("org.mockito:mockito-core:5.0.0")
+
+        implementation 'com.github.felHR85:UsbSerial:6.1.0'
     }
 
     testOptions {
@@ -47,6 +55,11 @@ android {
                outputs.upToDateWhen {false}
                showStandardStreams = true
             }
+        }
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
         }
     }
 }
